@@ -1,6 +1,7 @@
 /buck-out
 compile_commands.json
 .cache/
+vcpkg_installed/
 
 # MacOS special files
 .DS_Store

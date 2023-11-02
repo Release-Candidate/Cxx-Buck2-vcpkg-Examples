@@ -1,6 +1,5 @@
 load("//concat_compile_cmds:defs.bzl", "concat_compile_cmds")
 
-
 concat_compile_cmds(
     name="compile_commands",
     files=[

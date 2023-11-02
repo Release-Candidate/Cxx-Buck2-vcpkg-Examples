@@ -1,0 +1,20 @@
+load(":defs.bzl", "build_vcpkg_exe")
+
+native.python_bootstrap_binary(
+    name = "run_vcpkg",
+    main = "run_vcpkg.py",
+    visibility = ["PUBLIC"],
+)
+
+git_fetch(
+    name = "vcpkg.git",
+    repo = "https://github.com/microsoft/vcpkg",
+    rev = "354a05b99db8bec88347a8d35b46fbe7ef4c16da",
+)
+
+build_vcpkg_exe(
+    name  = "vcpkg_exe",
+    dir = ":vcpkg.git",
+    triple = "arm64-osx-release",
+    manifest = "./third-party/vcpkg.json"
+)

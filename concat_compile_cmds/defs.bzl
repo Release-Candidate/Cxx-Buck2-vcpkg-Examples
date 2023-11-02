@@ -1,4 +1,4 @@
-def _concat_compile_cmds_impl(ctx):
+def _concat_compile_cmds_impl(ctx: AnalysisContext) -> list[Provider]:
     output = ctx.actions.declare_output('compile_commands.log')
 
     cmd = [ctx.attrs._concat_compile_cmds[RunInfo]]
