@@ -1,0 +1,9 @@
+CompileFlags:
+  Add: ["-I/opt/homebrew/opt/llvm/include/c++/v1"]
+
+InlayHints:
+  BlockEnd: No
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: No
+  DeducedTypes: Yes
