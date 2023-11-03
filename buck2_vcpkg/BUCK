@@ -18,8 +18,22 @@ install_vcpkgs(
    # triple = "arm64-osx-release",
    # triple = "x64-linux-release"
    # triple = "x64-windows-release"
-    c_compiler = "/opt/homebrew/opt/llvm/bin/clang",
-    cxx_compiler = "/opt/homebrew/opt/llvm/bin/clang++",
+    c_compiler = select({
+        "prelude//os:linux": "clang",
+        "prelude//os:macos": select({
+            "prelude//cpu:arm64": "/opt/homebrew/opt/llvm/bin/clang",
+
+            "prelude//cpu:x86_64": "/opt/homebrew/opt/llvm/bin/clang",
+        }),
+        "prelude//os:windows": "clang"}),
+    cxx_compiler = select({
+        "prelude//os:linux": "clang",
+        "prelude//os:macos": select({
+            "prelude//cpu:arm64": "/opt/homebrew/opt/llvm/bin/clang++",
+
+            "prelude//cpu:x86_64": "/opt/homebrew/opt/llvm/bin/clang++",
+        }),
+        "prelude//os:windows": "clang"}),
     manifest = "./third-party/vcpkg.json",
     visibility = ["PUBLIC"]
 )
