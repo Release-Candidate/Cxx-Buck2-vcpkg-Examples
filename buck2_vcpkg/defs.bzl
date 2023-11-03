@@ -142,6 +142,10 @@ def _install_vcpkgs_impl(ctx: AnalysisContext)  -> list[Provider]:
     cmd.add(output.as_output())
     cmd.add("-t")
     cmd.add(ctx.attrs.triple)
+    cmd.add("-c")
+    cmd.add(ctx.attrs.c_compiler)
+    cmd.add("-x")
+    cmd.add(ctx.attrs.cxx_compiler)
     cmd.add(ctx.attrs.manifest)
 
     ctx.actions.run(cmd, category="run_vcpkg")
@@ -152,6 +156,8 @@ install_vcpkgs = rule(impl = _install_vcpkgs_impl,
     attrs = {
         "dir": attrs.source(),
         "manifest": attrs.string(),
+        "c_compiler": attrs.string(),
+        "cxx_compiler": attrs.string(),
         "triple":  attrs.string(default = _current_triplet()),
         "_run_vcpkg": attrs.default_only(attrs.exec_dep(providers = [RunInfo], default="//buck2_vcpkg:run_vcpkg"))
     }

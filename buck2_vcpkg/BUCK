@@ -18,5 +18,7 @@ install_vcpkgs(
    # triple = "arm64-osx-release",
    # triple = "x64-linux-release"
    # triple = "x64-windows-release"
+    c_compiler = "/opt/homebrew/opt/llvm/bin/clang",
+    cxx_compiler = "/opt/homebrew/opt/llvm/bin/clang++",
     manifest = "./third-party/vcpkg.json"
 )
