@@ -20,5 +20,6 @@ install_vcpkgs(
    # triple = "x64-windows-release"
     c_compiler = "/opt/homebrew/opt/llvm/bin/clang",
     cxx_compiler = "/opt/homebrew/opt/llvm/bin/clang++",
-    manifest = "./third-party/vcpkg.json"
+    manifest = "./third-party/vcpkg.json",
+    visibility = ["PUBLIC"]
 )

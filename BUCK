@@ -26,3 +26,9 @@ alias(
     actual="//test:test",
     visibility=["PUBLIC"],
 )
+
+alias(
+    name="vcpkg-install",
+    actual="//buck2_vcpkg:vcpkg_install",
+    visibility=["PUBLIC"],
+)
