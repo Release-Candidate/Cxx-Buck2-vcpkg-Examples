@@ -8,12 +8,15 @@
 # ==============================================================================
 
 import argparse
+import os
 from pathlib import Path
 import subprocess
 import sys
 
 
+################################################################################
 def main() -> None:
+    """The main entry point of this script."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-d",
@@ -23,10 +26,10 @@ def main() -> None:
         help="The path to the vcpkg root, the cloned git repository.",
     )
     parser.add_argument(
-        "-l",
-        "--log",
+        "-o",
+        "--out_dir",
         required=True,
-        help="The path to the log file to generate.",
+        help="The path to directory to install the packages in.",
     )
     parser.add_argument(
         "-t",
@@ -40,7 +43,6 @@ def main() -> None:
         help="The path to the manifest.",
     )
     args = parser.parse_args()
-    log = ""
     vcpkg_root = Path(args.dir).resolve()
     vcpkg_exe = vcpkg_root.joinpath("vcpkg")
     if not vcpkg_exe.is_file():
@@ -51,14 +53,7 @@ def main() -> None:
             vcpkg_bootstrap = vcpkg_root.joinpath("bootstrap-vcpkg.sh")
         out = subprocess.run(
             [vcpkg_bootstrap, "-disableMetrics"],
-            universal_newlines=True,
-            capture_output=True,
-            encoding="utf-8",
         )
-        log += out.stdout
-        log += out.stderr
-        with open(args.log, "wt", encoding="utf-8") as log_file:
-            log_file.write(log)
         if out.returncode != 0:
             sys.exit(1)
 
@@ -69,21 +64,18 @@ def main() -> None:
             "install",
             f"--vcpkg-root={vcpkg_root}",
             f"--triplet={args.triple}",
-            f"--x-install-root={manifest_root}/vcpkg",
+            f"--x-install-root={args.out_dir}",
             f"--x-manifest-root={manifest_root}",
         ],
-        cwd=manifest_root,
-        universal_newlines=True,
-        capture_output=True,
-        encoding="utf-8",
     )
-    log += out.stdout
-    log += out.stderr
-    with open(args.log, "wt+", encoding="utf-8") as log_file:
-        log_file.write(log)
-
     if out.returncode != 0:
         sys.exit(2)
+
+    link_src = Path(args.out_dir).joinpath(args.triple).resolve()
+    link_dst = manifest_root.joinpath("vcpkg").absolute()
+    if link_dst.exists():
+        os.remove(link_dst)
+    os.symlink(link_src, link_dst, target_is_directory=True)
 
 
 if __name__ == "__main__":

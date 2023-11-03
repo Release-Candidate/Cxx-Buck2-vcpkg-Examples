@@ -1,9 +1,19 @@
-def _build_vcpkg_exe(ctx: AnalysisContext)  -> list[Provider]:
-    output = ctx.actions.declare_output("run_vcpkg.log")
+# SPDX-FileCopyrightText:  Copyright 2023 Roland Csaszar
+# SPDX-License-Identifier: MIT
+#
+# Project:  Cxx-Buck2-vcpkg-Examples
+# File:     defs.bzl
+# Date:     03.Nov.2023
+#
+# ==============================================================================
+
+def _install_vcpkgs_impl(ctx: AnalysisContext)  -> list[Provider]:
+
+    output = ctx.actions.declare_output("vcpkg", dir=True)
     cmd = cmd_args([ctx.attrs._run_vcpkg[RunInfo]])
     cmd.add("-d")
     cmd.add(ctx.attrs.dir)
-    cmd.add("-l")
+    cmd.add("-o")
     cmd.add(output.as_output())
     cmd.add("-t")
     cmd.add(ctx.attrs.triple)
@@ -13,7 +23,7 @@ def _build_vcpkg_exe(ctx: AnalysisContext)  -> list[Provider]:
 
     return [DefaultInfo(default_output=output)]
 
-build_vcpkg_exe = rule(impl = _build_vcpkg_exe,
+install_vcpkgs = rule(impl = _install_vcpkgs_impl,
     attrs = {
         "dir": attrs.source(),
         "manifest": attrs.string(),
