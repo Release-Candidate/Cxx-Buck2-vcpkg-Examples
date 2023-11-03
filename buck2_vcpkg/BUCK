@@ -15,6 +15,8 @@ git_fetch(
 install_vcpkgs(
     name  = "vcpkg_install",
     dir = ":vcpkg.git",
-    triple = "arm64-osx-release",
+   # triple = "arm64-osx-release",
+   # triple = "x64-linux-release"
+   # triple = "x64-windows-release"
     manifest = "./third-party/vcpkg.json"
 )
