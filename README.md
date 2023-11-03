@@ -25,7 +25,7 @@ Install Buck 2 like documented at Buck 2 - Getting Started.
 ## Using this Example
 
 - Checkout the Buck 2 prelude containing the language rules: `git submodule update --init`
-
+- Download all vcpkg packages defined in [./third-party/vcpkg.json](./third-party/vcpkg.json): `buck2 build :vcpkg-install`
 - Now you should be able to build and run the example binary: `buck2 run //app:app`.
 - To generate a `compile_commands.json` file (needed for the C++ LSPs), run `buck2 build //:compile_commands`.
 
@@ -33,6 +33,7 @@ Install Buck 2 like documented at Buck 2 - Getting Started.
 
 - `buck2 clean` - Deletes all generated files.
 - `buck2 targets //...` - Lists all available targets, including all configured vcpkg packages.
+- `buck2 build :vcpkg-install` - A alias for `buck2 build //buck2_vcpkg:vcpkg_install` to install all packages configured in [./third-party/vcpkg.json](./third-party/vcpkg.json). The libraries and header files have to be added to [./third-party/BUCK](./third-party/BUCK) to use them in the source.
 - `buck2 build :exe` - A alias for `buck2 build //app:app`, builds the executable [./app/main.cpp](./app/main.cpp). Buck 2 configuration [./app/BUCK](./app/BUCK)
 - `buck2 run :exe` - A alias for `buck2 run //app:app`, builds and runs the executable [./app/main.cpp](./app/main.cpp). Buck 2 configuration [./app/BUCK](./app/BUCK)
 - `buck2 build :test` - A alias for `buck2 build test:test`, builds the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK).
@@ -58,6 +59,7 @@ Install Buck 2 like documented at Buck 2 - Getting Started.
 - [./BUCK](./BUCK) - Main Buck 2 configuration, holds the aliases, the vcpkg rules and the configuration for the generation of `./compile_commands.json`. You have to manually edit this.
 - [./toolchains/BUCK](./toolchains/BUCK) - Configuration of the Buck 2 toolchains - Python and C++. You have to manually edit this.
 - [./concat_compile_cmds/](./concat_compile_cmds/) - Python script and Buck2 configuration to generate the file `./compile_commands.json`. Just copy that in your own project.
+- [./buck2_vcpkg/](./buck2_vcpkg/) - Configuration of the vcpkg installer. In [./buck2_vcpkg/BUCK](./buck2_vcpkg/BUCK) you have to configure the Git revision of vcpkg to use and the triplet describing your architecture and OS.
 - [./third-party/BUCK](./third-party/BUCK) - You need to create this to be able to use the installed vcpkg packages.
 - [./lib/BUCK](./lib/BUCK) - The library's configuration. You have to manually create that.
 - [./app/BUCK](./app/BUCK) - Configuration of the executable. You have to manually create that.
@@ -66,11 +68,12 @@ Install Buck 2 like documented at Buck 2 - Getting Started.
 ## Converting an Existing or Generating a new C++ Project with Buck 2
 
 1. Initialize the project by running `buck2 init --git`
-2. Generate a [./vcpkg.json](./vcpkg.json) containing your dependencies.
+2. Generate a [./third-party/vcpkg.json](./third-party/vcpkg.json) containing your dependencies.
 3. Edit the files [./toolchains/BUCK](./toolchains/BUCK) and [./BUCK](./BUCK) to include the C++ and Python toolchains.
 4. Add sources and `BUCK` files. Like [./lib/BUCK](./lib/BUCK), [./app/BUCK](./app/BUCK) and [./test/BUCK](./test/BUCK).
 5. Copy the directory [./concat_compile_cmds/](./concat_compile_cmds/) to your project and configure it in [./toolchains/BUCK](./toolchains/BUCK) and [./BUCK](./BUCK) to be able to generate a `./compile_commands.json` file in your root directory.
-6. Run `buck2 build :compile_commands` to generate the file `./compile_commands.json` for use with your LSP (like `clangd`).
+6. Copy the directory [./buck2_vcpkg/](./buck2_vcpkg/) into your project and configure it in [./buck2_vcpkg/BUCK](./buck2_vcpkg/BUCK) and the libraries and headers to use in [./third-party/BUCK](./third-party/BUCK).
+7. Run `buck2 build :compile_commands` to generate the file `./compile_commands.json` for use with your LSP (like `clangd`).
 
 ## Other Buck 2 C++ Examples
 
