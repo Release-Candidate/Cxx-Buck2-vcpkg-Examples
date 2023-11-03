@@ -11,6 +11,7 @@
 
 #include <gtest/gtest.h>
 #include <rapidcheck.h>
+#include <rapidcheck/gtest.h>
 #include <format>
 
 #include "lib/lib.hpp"
@@ -23,6 +24,10 @@ TEST(testTest, rapidCheckIntToString) {
   EXPECT_TRUE(rc::check([](const int& n) {
     return RC_ASSERT(foo(n) == std::format("{}", n + 1));
   }));
+}
+
+RC_GTEST_PROP(testTest, rapidCheckGTestIntToString, (const int& n)) {
+  RC_ASSERT(foo(n) == std::format("{}", n + 1));
 }
 
 // No `main` needed, `libgtest_main` contains it.
