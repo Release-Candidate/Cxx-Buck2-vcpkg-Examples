@@ -69,7 +69,7 @@ def main() -> None:
             "install",
             f"--vcpkg-root={vcpkg_root}",
             f"--triplet={args.triple}",
-            f"--x-install-root={manifest_root}",
+            f"--x-install-root={manifest_root}/vcpkg",
             f"--x-manifest-root={manifest_root}",
         ],
         cwd=manifest_root,
