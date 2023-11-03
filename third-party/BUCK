@@ -11,7 +11,10 @@ prebuilt_cxx_library(
     header_only = False,
     exported_headers = {"gmp.h": "./vcpkg/include/gmp.h"},
     header_namespace = "",
-    static_lib = "./vcpkg/lib/libgmp.a",
+    static_lib = select({
+        "prelude//os:linux": "./vcpkg/lib/libgmp.a",
+        "prelude//os:macos": "./vcpkg/lib/libgmp.a",
+        "prelude//os:windows": "./vcpkg/lib/libgmp.lib"}),
     visibility = ["PUBLIC"]
 )
 
@@ -20,7 +23,10 @@ prebuilt_cxx_library(
     header_only = False,
     exported_headers = {"gmpxx.h": "./vcpkg/include/gmpxx.h"},
     header_namespace = "",
-    static_lib = "./vcpkg/lib/libgmpxx.a",
+    static_lib = select({
+        "prelude//os:linux": "./vcpkg/lib/libgmpxx.a",
+        "prelude//os:macos": "./vcpkg/lib/libgmpxx.a",
+        "prelude//os:windows": "./vcpkg/lib/libgmpxx.lib"}),
     visibility = ["PUBLIC"]
 )
 
@@ -140,7 +146,10 @@ prebuilt_cxx_library(
                         "rapidcheck/gen/detail/ShrinkValueIterator.hpp": "./vcpkg/include/rapidcheck/gen/detail/ShrinkValueIterator.hpp",
                         "rapidcheck/Seq.h": "./vcpkg/include/rapidcheck/Seq.h"},
     header_namespace = "",
-    static_lib = "./vcpkg/lib/librapidcheck.a",
+    static_lib = select({
+        "prelude//os:linux": "./vcpkg/lib/librapidcheck.a",
+        "prelude//os:macos": "./vcpkg/lib/librapidcheck.a",
+        "prelude//os:windows": "./vcpkg/lib/librapidcheck.lib"}),
     visibility = ["PUBLIC"]
 )
 
@@ -169,7 +178,10 @@ prebuilt_cxx_library(
                         "internal/gtest-port-arch.h": "./vcpkg/include/gtest/internal/gtest-port-arch.h",
                         "gtest-assertion-result.h": "./vcpkg/include/gtest/gtest-assertion-result.h"},
     header_namespace = "gtest",
-    static_lib = "./vcpkg/lib/libgtest.a",
+    static_lib = select({
+        "prelude//os:linux": "./vcpkg/lib/libgtest.a",
+        "prelude//os:macos": "./vcpkg/lib/libgtest.a",
+        "prelude//os:windows": "./vcpkg/lib/libgtest.lib"}),
     visibility = ["PUBLIC"]
 )
 prebuilt_cxx_library(
@@ -177,6 +189,9 @@ prebuilt_cxx_library(
     header_only = False,
     exported_headers = {},
     header_namespace = "gtest",
-    static_lib = "./vcpkg/lib/manual-link/libgtest_main.a",
+    static_lib = select({
+        "prelude//os:linux": "./vcpkg/lib/manual-link/libgtest_main.a",
+        "prelude//os:macos": "./vcpkg/lib/manual-link/libgtest_main.a",
+        "prelude//os:windows": "./vcpkg/lib/manual-link/libgtest_main.lib"}),
     visibility = ["PUBLIC"]
 )
