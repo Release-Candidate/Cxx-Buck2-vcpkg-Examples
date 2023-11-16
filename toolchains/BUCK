@@ -3,12 +3,6 @@ load("@prelude//toolchains:genrule.bzl", "system_genrule_toolchain")
 load("@prelude//toolchains:python.bzl", "system_python_bootstrap_toolchain")
 load("@prelude//toolchains:remote_test_execution.bzl", "remote_test_execution_toolchain")
 
-#system_cxx_toolchain(
-#    name = "cxx",
-#    cxx_compiler = select({ "prelude//os:macos": "/opt/homebrew/opt/llvm/bin/clang++"}),
-#    visibility = ["PUBLIC"],
-#)
-
 system_cxx_toolchain(
     name = "cxx",
     compiler_type = "clang",
