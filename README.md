@@ -36,8 +36,9 @@ Install Buck 2 like documented at Buck 2 - Getting Started.
 - `buck2 build :vcpkg-install` - A alias for `buck2 build //buck2_vcpkg:vcpkg_install` to install all packages configured in [./third-party/vcpkg.json](./third-party/vcpkg.json). The libraries and header files have to be added to [./third-party/BUCK](./third-party/BUCK) to use them in the source.
 - `buck2 build :exe` - A alias for `buck2 build //app:app`, builds the executable [./app/main.cpp](./app/main.cpp). Buck 2 configuration [./app/BUCK](./app/BUCK)
 - `buck2 run :exe` - A alias for `buck2 run //app:app`, builds and runs the executable [./app/main.cpp](./app/main.cpp). Buck 2 configuration [./app/BUCK](./app/BUCK)
-- `buck2 build :test` - A alias for `buck2 build test:test`, builds the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK).
-- `buck2 run :test` - A alias for `buck2 run test:test`, builds and runs the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK).
+- `buck2 build :test` - A alias for `buck2 build //test:test`, builds the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK).
+- `buck2 test :test` - A alias for `buck2 test //test:test`, builds and runs the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK).
+- `buck2 run :test` - A alias for `buck2 run //test:test`, builds and runs the tests in [./test/test_main.cpp](./test/test_main.cpp). Buck 2 configuration [./test/BUCK](./test/BUCK). The difference to `buck2 test` is mostly in the output, `run` uses for example colored output.
 - `buck2 build :lib` - A alias for `buck2 build //lib:library`, builds the library in [./lib/lib.cpp](./lib/lib.cpp). Buck 2 configuration [./lib/BUCK](./lib/BUCK)
 - `buck2 build :compile_commands` - Generates the file `./compile_commands.json`, needed for LSPs. The actual python scripts and Buck 2 configuration is located in [./concat_compile_cmds/](./concat_compile_cmds/), the list of targets to add to `./compile_commands.json` is located in the Buck 2 configuration file [./BUCK](./BUCK):
 
