@@ -1,5 +1,19 @@
 # buildifier: disable=no-effect
-cxx_binary(
+# cxx_binary(
+#     name = "test",
+#     srcs = ["test_main.cpp"],
+#     link_style = "static",
+#     deps = ["//lib:library",
+#             "//third-party:argparse",
+#             "//third-party:gmp",
+#             "//third-party:gmpxx",
+#             "//third-party:gtest",
+#             "//third-party:gtest-main",
+#             "//third-party:rapidcheck"],
+#     visibility = ["PUBLIC"],
+# )
+
+cxx_test(
     name = "test",
     srcs = ["test_main.cpp"],
     link_style = "static",
